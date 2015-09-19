@@ -269,7 +269,7 @@ printf("Stage(end): $cdirty->$cend %.2f%% reduction.\n", ($cdirty - $cend) / $cd
 
 # write to config
 for (my $i = 0; $i < @rev_tld; $i++) {
-    $rev_tld[$i] = 'zone "' . rev($rev_tld[$i]) . '" {type master;notify no;file "/etc/bind/db.empty";};';
+    $rev_tld[$i] = 'zone "' . rev($rev_tld[$i]) . '" {type master;notify no;file "db.empty";};';
 }
 
 @rev_tld = map { s/\@/-/gr } @rev_tld;          # reverting back from @ to -
