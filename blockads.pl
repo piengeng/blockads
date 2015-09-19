@@ -74,11 +74,13 @@ if (! $prod) {
 # assume wget is present, due to laziness
 if ($fetch) {
     if ($^O eq 'linux'){
-        my $zipped = 'http://hosts-file.net/download/hosts.zip';
-        say "downloading $zipped";
-        `wget -qP cache http://hosts-file.net/download/hosts.zip -O cache/hosts.zip`;
-        say "unzipping cache/hosts.zip";
-        `unzip -p cache/hosts.zip hosts.txt > cache/hosts.txt`
+        if ($crazy) {
+            my $zipped = 'http://hosts-file.net/download/hosts.zip';
+            say "downloading $zipped";
+            `wget -qP cache http://hosts-file.net/download/hosts.zip -O cache/hosts.zip`;
+            say "unzipping cache/hosts.zip";
+            `unzip -p cache/hosts.zip hosts.txt > cache/hosts.txt`
+        }
     }
 
     for (my $i = 0; $i < @sources; $i++) {
