@@ -267,15 +267,22 @@ my $cend = @rev_tld;
 sayarray2file('cache/rev_tld_sorted_pass2_clean_excludes', \@rev_tld) if (! $prod);
 printf("Stage(end): $cdirty->$cend %.2f%% reduction.\n", ($cdirty - $cend) / $cdirty * 100);
 
+if ($cend < 24000) {
+    die('too few. die here.');
+}
 # write to config
+my $prepend = ($^O eq 'linux') ? '/etc/bind/' : '';
 for (my $i = 0; $i < @rev_tld; $i++) {
-    $rev_tld[$i] = 'zone "' . rev($rev_tld[$i]) . '" {type master;notify no;file "db.empty";};';
+    $rev_tld[$i] = 'zone "' . rev($rev_tld[$i]) . '" {type master;notify no;file "' . $prepend .'db.empty";};';
 }
 
 @rev_tld = map { s/\@/-/gr } @rev_tld;          # reverting back from @ to -
 
 if ($^O eq 'MSWin32'){
     sayarray2file('cache/named.conf.adblock', \@rev_tld);
+    if ($prod) {
+        system "copy cache/named.conf.adblock \"C:\\Program Files\\ISC BIND 9\\etc\"";
+    }
 } else {
     sayarray2file('cache/named.conf.adblock', \@rev_tld);
     if ($prod) {
