@@ -84,7 +84,7 @@ if ($fetch) {
     }
 
     for (my $i = 0; $i < @sources; $i++) {
-        my $cmd = "wget -q -O cache/$i.host " . $sources[$i];
+        my $cmd = "wget --no-check-certificate -q -O cache/$i.host " . $sources[$i];
         say "running $cmd";
         system $cmd;
     }
@@ -283,7 +283,7 @@ for (my $i = 0; $i < @rev_tld; $i++) {
 if ($^O eq 'MSWin32'){
     sayarray2file('cache/named.conf.adblock', \@rev_tld);
     if ($prod) {
-        system "copy cache/named.conf.adblock \"C:\\Program Files\\ISC BIND 9\\etc\"";
+        system "copy cache\\named.conf.adblock \"C:\\named\\etc\"";
     }
 } else {
     sayarray2file('cache/named.conf.adblock', \@rev_tld);
