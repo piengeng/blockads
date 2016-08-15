@@ -284,6 +284,7 @@ if ($^O eq 'MSWin32'){
     sayarray2file('cache/named.conf.adblock', \@rev_tld);
     if ($prod) {
         system "copy cache\\named.conf.adblock \"C:\\named\\etc\"";
+        system 'net stop "ISC BIND" && net start "ISC BIND"';
     }
 } else {
     sayarray2file('cache/named.conf.adblock', \@rev_tld);
